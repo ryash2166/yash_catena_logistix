@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catena Logistix - Supply Chain Visibility Simplified</title>
+    
+    <!-- ============================================ -->
+    <!-- CSS STYLES START -->
+    <!-- ============================================ -->
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light Theme Colors */
+            --background: #ffffff;
+            --foreground: #0f172a;
+            --card: #ffffff;
+            --card-foreground: #0f172a;
+            --popover: #ffffff;
+            --popover-foreground: #0f172a;
+            --primary: #0891b2;
+            --primary-foreground: #f0f9ff;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #0f172a;
+            --muted: #f1f5f9;
+            --muted-foreground: #64748b;
+            --accent: #f59e0b;
+            --accent-foreground: #0f172a;
+            --destructive: #ef4444;
+            --destructive-foreground: #fef2f2;
+            --border: #e2e8f0;
+            --input: #e2e8f0;
+            --ring: #0891b2;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Colors */
+            --background: #020617;
+            --foreground: #f8fafc;
+            --card: #0f172a;
+            --card-foreground: #f8fafc;
+            --popover: #0f172a;
+            --popover-foreground: #f8fafc;
+            --primary: #0ea5e9;
+            --primary-foreground: #0f172a;
+            --secondary: #1e293b;
+            --secondary-foreground: #f8fafc;
+            --muted: #1e293b;
+            --muted-foreground: #94a3b8;
+            --accent: #fbbf24;
+            --accent-foreground: #0f172a;
+            --destructive: #dc2626;
+            --destructive-foreground: #fef2f2;
+            --border: #334155;
+            --input: #334155;
+            --ring: #0ea5e9;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(var(--background-rgb, 255, 255, 255), 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--foreground);
+        }
+
+        .logo-icon {
+            background-color: var(--primary);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            color: var(--primary-foreground);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .nav {
+            display: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--foreground);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: var(--foreground);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            background-color: var(--muted);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            color: var(--foreground);
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--muted);
+        }
+
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 5rem 0 8rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--muted) 0%, var(--background) 100%);
+        }
+
+        .hero-decoration {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .hero-decoration-1 {
+            top: 5rem;
+            left: 2.5rem;
+            width: 5rem;
+            height: 5rem;
+            background-color: var(--primary);
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        .hero-decoration-2 {
+            bottom: 5rem;
+            right: 2.5rem;
+            width: 4rem;
+            height: 4rem;
+            background-color: var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            display: grid;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            /* Fixed contrast issue by making background more opaque and adjusting text color */
+            background-color: rgba(8, 145, 178, 0.15);
+            color: #0c7490;
+            border: 1px solid rgba(8, 145, 178, 0.2);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        [data-theme="dark"] .hero-badge {
+            background-color: rgba(14, 165, 233, 0.2);
+            color: #38bdf8;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title .highlight {
+            color: var(--primary);
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            max-width: 36rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            padding-top: 1rem;
+        }
+
+        .stat {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--foreground);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .hero-dashboard {
+            animation: fadeInRight 1s ease-out;
+        }
+
+        .dashboard-card {
+            background-color: var(--card);
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            transition: all 0.5s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.35);
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-title {
+            font-weight: 600;
+            color: var(--foreground);
+        }
+
+        .live-badge {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .dashboard-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background-color: var(--background);
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .dashboard-item:hover {
+            background-color: var(--muted);
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .status-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-green { background-color: #10b981; }
+        .status-blue { background-color: #3b82f6; }
+        .status-orange { background-color: #f59e0b; }
+        .status-primary { background-color: var(--primary); }
+
+        .dashboard-total {
+            text-align: center;
+        }
+
+        .total-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .total-label {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounce-slow {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .nav {
+                display: flex;
+            }
+
+            .header-actions {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero-title {
+                font-size: 3.75rem;
+            }
+
+            .hero-buttons {
+                flex-direction: row;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 2rem;
+            }
+
+            .hero {
+                padding: 8rem 0 12rem;
+            }
+        }
+
+        /* Icon styles */
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            fill: currentColor;
+        }
+
+        .icon-sm {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        /* Additional sections placeholder */
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--foreground);
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- ============================================ -->
+    <!-- CSS STYLES END -->
+    <!-- ============================================ -->
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- HTML CONTENT START -->
+    <!-- ============================================ -->
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                            <path d="M15 18H9"/>
+                            <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                            <circle cx="17" cy="18" r="2"/>
+                            <circle cx="7" cy="18" r="2"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Catena Logistix</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav">
+                    <a href="#">Home</a>
+                    <a href="#">Our Services</a>
+                    <a href="#">Our Programs</a>
+                    <a href="#">Contact</a>
+                </nav>
+
+                <!-- Desktop Actions -->
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <svg class="icon theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="icon theme-icon-dark" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <a href="#" class="btn btn-ghost">Login</a>
+                    <a href="#" class="btn btn-primary">Request a Demo</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <svg class="icon menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="4" x2="20" y1="12" y2="12"/>
+                        <line x1="4" x2="20" y1="6" y2="6"/>
+                        <line x1="4" x2="20" y1="18" y2="18"/>
+                    </svg>
+                    <svg class="icon close-icon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6 6 18"/>
+                        <path d="M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <nav class="mobile-nav" id="mobileNav">
+                <a href="#">Home</a>
+                <a href="#">Our Services</a>
+                <a href="#">Our Programs</a>
+                <a href="#">Contact</a>
+                <div style="padding-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <button class="theme-toggle" onclick="toggleTheme()" style="align-self: center; margin-bottom: 0.5rem;">
+                        <svg class="icon theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="icon theme-icon-dark" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <a href="#" class="btn btn-ghost" style="width: 100%; text-align: center;">Login</a>
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">Request a Demo</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Background -->
+        <div class="hero-bg"></div>
+        <div class="hero-decoration hero-decoration-1"></div>
+        <div class="hero-decoration hero-decoration-2"></div>
+
+        <div class="container">
+            <div class="hero-content">
+                <!-- Content -->
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        ✨ Efficient, Faster, Smarter for First Time Buyers
+                    </div>
+                    <h1 class="hero-title">
+                        Supply Chain <span class="highlight">Visibility</span> Simplified
+                    </h1>
+                    <p class="hero-description">
+                        CatenaLogistix is your go-to platform, designed for those new to supply chain management. We make it
+                        easy to bring everything together in one place.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary">
+                            Get Started Today
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="btn btn-ghost">
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5,3 19,12 5,21 5,3"/>
+                            </svg>
+                            Watch Demo
+                        </a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat" style="animation-delay: 0.2s;">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Companies Trust Us</div>
+                        </div>
+                        <div class="stat" style="animation-delay: 0.4s;">
+                            <div class="stat-number">99.9%</div>
+                            <div class="stat-label">Uptime Guarantee</div>
+                        </div>
+                        <div class="stat" style="animation-delay: 0.6s;">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Support Available</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Preview -->
+                <div class="hero-dashboard">
+                    <div class="dashboard-card">
+                        <div class="dashboard-header">
+                            <h3 class="dashboard-title">Supply Chain Dashboard</h3>
+                            <div class="live-badge">Live</div>
+                        </div>
+
+                        <div class="dashboard-items">
+                            <div class="dashboard-item" style="animation-delay: 0.1s;">
+                                <div class="item-info">
+                                    <div class="status-dot status-green"></div>
+                                    <span>Inventory Management</span>
+                                </div>
+                                <span style="font-weight: 500;">Active</span>
+                            </div>
+
+                            <div class="dashboard-item" style="animation-delay: 0.2s;">
+                                <div class="item-info">
+                                    <div class="status-dot status-blue"></div>
+                                    <span>Shipment Tracking</span>
+                                </div>
+                                <span style="font-weight: 500;">In Transit</span>
+                            </div>
+
+                            <div class="dashboard-item" style="animation-delay: 0.3s;">
+                                <div class="item-info">
+                                    <div class="status-dot status-orange"></div>
+                                    <span>Supplier Coordination</span>
+                                </div>
+                                <span style="font-weight: 500;">Pending</span>
+                            </div>
+
+                            <div class="dashboard-item" style="animation-delay: 0.4s;">
+                                <div class="item-info">
+                                    <div class="status-dot status-green"></div>
+                                    <span>Risk Assessment</span>
+                                </div>
+                                <span style="font-weight: 500;">Complete</span>
+                            </div>
+
+                            <div class="dashboard-item" style="animation-delay: 0.5s;">
+                                <div class="item-info">
+                                    <div class="status-dot status-primary"></div>
+                                    <span>Supply Chain Analysis</span>
+                                </div>
+                                <span style="font-weight: 500;">Optimized</span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-total">
+                            <div class="total-number">24,650</div>
+                            <div class="total-label">Total Shipments Managed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Sections Placeholder -->
+    <!-- Replacing placeholder with complete sections from React components -->
+    
+    <!-- Services Section -->
+    <section class="section" style="background-color: rgba(241, 245, 249, 0.3);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="section-title">Comprehensive Logistics Solutions</h2>
+                <p style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
+                    From transportation to inventory management, we provide end-to-end logistics solutions tailored to your business needs.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-3">
+                <div class="card service-card">
+                    <div style="width: 3rem; height: 3rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                            <path d="M15 18H9"/>
+                            <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                            <circle cx="17" cy="18" r="2"/>
+                            <circle cx="7" cy="18" r="2"/>
+                        </svg>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; font-weight: 600; font-size: 1.25rem;">Transportation Management</h3>
+                    <p style="color: var(--muted-foreground);">Optimize your shipping routes and reduce transportation costs with our advanced logistics platform.</p>
+                </div>
+                
+                <div class="card service-card">
+                    <div style="width: 3rem; height: 3rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; font-weight: 600; font-size: 1.25rem;">Inventory Management</h3>
+                    <p style="color: var(--muted-foreground);">Real-time inventory tracking and automated reordering to prevent stockouts and overstock.</p>
+                </div>
+                
+                <div class="card service-card">
+                    <div style="width: 3rem; height: 3rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3v5h5"/>
+                            <path d="M3 8a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 4"/>
+                            <path d="M21 21v-5h-5"/>
+                            <path d="M21 16a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 20"/>
+                        </svg>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; font-weight: 600; font-size: 1.25rem;">Supply Chain Analytics</h3>
+                    <p style="color: var(--muted-foreground);">Data-driven insights to optimize your supply chain performance and identify bottlenecks.</p>
+                </div>
+                
+                <div class="card service-card">
+                    <div style="width: 3rem; height: 3rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                        </svg>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; font-weight: 600; font-size: 1.25rem;">Risk Management</h3>
+                    <p style="color: var(--muted-foreground);">Proactive risk assessment and mitigation strategies to protect your supply chain.</p>
+                </div>
+                
+                <div class="card service-card">
+                    <div style="width: 3rem; height: 3rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; font-weight: 600; font-size: 1.25rem;">Global Logistics</h3>
+                    <p style="color: var(--muted-foreground);">Seamless international shipping and customs management for global operations.</p>
+                </div>
+                
+                <div class="card service-card">
+                    <div style="width: 3rem; height: 3rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/>
+                        </svg>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; font-weight: 600; font-size: 1.25rem;">Process Automation</h3>
+                    <p style="color: var(--muted-foreground);">Automate repetitive tasks and streamline workflows for maximum efficiency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customers Section -->
+    <section class="section" style="background-color: rgba(241, 245, 249, 0.3);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="section-title">Trusted by Industry Leaders</h2>
+                <p style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
+                    From small businesses to Fortune 500 companies, organizations worldwide trust CatenaLogistix to optimize their supply chain operations.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-3">
+                <div class="card customer-card">
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="Global Manufacturing Corp logo" style="height: 3rem; opacity: 0.7;">
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">Global Manufacturing Corp</h3>
+                        <p style="font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: 0.75rem;">Manufacturing</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Streamlined their supply chain operations across 15 countries</p>
+                    </div>
+                </div>
+                
+                <div class="card customer-card">
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="TechFlow Solutions logo" style="height: 3rem; opacity: 0.7;">
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">TechFlow Solutions</h3>
+                        <p style="font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: 0.75rem;">Technology</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Reduced shipping costs by 30% with our optimization tools</p>
+                    </div>
+                </div>
+                
+                <div class="card customer-card">
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="RetailMax Chain logo" style="height: 3rem; opacity: 0.7;">
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">RetailMax Chain</h3>
+                        <p style="font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: 0.75rem;">Retail</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Improved inventory accuracy to 99.8% across 200+ stores</p>
+                    </div>
+                </div>
+                
+                <div class="card customer-card">
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="FreshFood Distributors logo" style="height: 3rem; opacity: 0.7;">
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">FreshFood Distributors</h3>
+                        <p style="font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: 0.75rem;">Food & Beverage</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Enhanced cold chain visibility and reduced waste by 25%</p>
+                    </div>
+                </div>
+                
+                <div class="card customer-card">
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="AutoParts Express logo" style="height: 3rem; opacity: 0.7;">
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">AutoParts Express</h3>
+                        <p style="font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: 0.75rem;">Automotive</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Accelerated delivery times by 40% with real-time tracking</p>
+                    </div>
+                </div>
+                
+                <div class="card customer-card">
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="MedSupply Network logo" style="height: 3rem; opacity: 0.7;">
+                    </div>
+                    <div style="text-align: center;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">MedSupply Network</h3>
+                        <p style="font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: 0.75rem;">Healthcare</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Ensured 100% compliance with medical supply regulations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Help Section -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="section-title">How We Help Your Business Succeed</h2>
+                <p style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
+                    Our comprehensive platform addresses every aspect of supply chain management, from visibility to optimization, ensuring your operations run smoothly.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-3">
+                <div class="card help-card">
+                    <img src="/placeholder.svg?height=160&width=300" alt="End-to-End Visibility" style="width: 100%; height: 10rem; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                        <div style="padding: 0.5rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; margin-right: 0.75rem;">
+                            <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                                <path d="M15 18H9"/>
+                                <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                                <circle cx="17" cy="18" r="2"/>
+                                <circle cx="7" cy="18" r="2"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600;">End-to-End Visibility</h3>
+                    </div>
+                    <p style="color: var(--muted-foreground);">Track your shipments from origin to destination with real-time updates and predictive analytics.</p>
+                </div>
+                
+                <div class="card help-card">
+                    <img src="/placeholder.svg?height=160&width=300" alt="Data-Driven Insights" style="width: 100%; height: 10rem; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                        <div style="padding: 0.5rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; margin-right: 0.75rem;">
+                            <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3v5h5"/>
+                                <path d="M3 8a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 4"/>
+                                <path d="M21 21v-5h-5"/>
+                                <path d="M21 16a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 20"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600;">Data-Driven Insights</h3>
+                    </div>
+                    <p style="color: var(--muted-foreground);">Make informed decisions with comprehensive analytics and performance metrics across your supply chain.</p>
+                </div>
+                
+                <div class="card help-card">
+                    <img src="/placeholder.svg?height=160&width=300" alt="Risk Management" style="width: 100%; height: 10rem; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                        <div style="padding: 0.5rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; margin-right: 0.75rem;">
+                            <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600;">Risk Management</h3>
+                    </div>
+                    <p style="color: var(--muted-foreground);">Identify and mitigate potential disruptions before they impact your operations with our AI-powered risk assessment.</p>
+                </div>
+                
+                <div class="card help-card">
+                    <img src="/placeholder.svg?height=160&width=300" alt="Process Optimization" style="width: 100%; height: 10rem; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                        <div style="padding: 0.5rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; margin-right: 0.75rem;">
+                            <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6m0 6v6"/>
+                                <path d="M21 12h-6m-6 0H3"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600;">Process Optimization</h3>
+                    </div>
+                    <p style="color: var(--muted-foreground);">Streamline your workflows and reduce operational costs with automated processes and smart recommendations.</p>
+                </div>
+                
+                <div class="card help-card">
+                    <img src="/placeholder.svg?height=160&width=300" alt="Supplier Collaboration" style="width: 100%; height: 10rem; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                        <div style="padding: 0.5rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; margin-right: 0.75rem;">
+                            <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600;">Supplier Collaboration</h3>
+                    </div>
+                    <p style="color: var(--muted-foreground);">Enhance communication and coordination with your supplier network through our integrated platform.</p>
+                </div>
+                
+                <div class="card help-card">
+                    <img src="/placeholder.svg?height=160&width=300" alt="Rapid Implementation" style="width: 100%; height: 10rem; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+                        <div style="padding: 0.5rem; background-color: rgba(8, 145, 178, 0.1); border-radius: 0.5rem; margin-right: 0.75rem;">
+                            <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600;">Rapid Implementation</h3>
+                    </div>
+                    <p style="color: var(--muted-foreground);">Get up and running quickly with our intuitive setup process and dedicated onboarding support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrations Section -->
+    <section class="section" style="background-color: rgba(241, 245, 249, 0.3);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="section-title">Powerful Integrations</h2>
+                <p style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
+                    Connect with your existing tools and systems. Our platform integrates seamlessly with leading ERP, CRM, and logistics providers.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                <div class="card integration-card">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="SAP logo" style="height: 3rem; margin: 0 auto 1rem; opacity: 0.7;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">SAP</h3>
+                        <p style="font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;">ERP Systems</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Seamlessly connect with SAP for unified business operations</p>
+                    </div>
+                </div>
+                
+                <div class="card integration-card">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="Oracle logo" style="height: 3rem; margin: 0 auto 1rem; opacity: 0.7;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">Oracle</h3>
+                        <p style="font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;">Database & Cloud</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Integrate Oracle systems for comprehensive data management</p>
+                    </div>
+                </div>
+                
+                <div class="card integration-card">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="Microsoft Dynamics logo" style="height: 3rem; margin: 0 auto 1rem; opacity: 0.7;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">Microsoft Dynamics</h3>
+                        <p style="font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;">Business Applications</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Connect with Dynamics 365 for complete business visibility</p>
+                    </div>
+                </div>
+                
+                <div class="card integration-card">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="Salesforce logo" style="height: 3rem; margin: 0 auto 1rem; opacity: 0.7;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">Salesforce</h3>
+                        <p style="font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;">CRM</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Sync customer data and orders with Salesforce CRM</p>
+                    </div>
+                </div>
+                
+                <div class="card integration-card">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="AWS logo" style="height: 3rem; margin: 0 auto 1rem; opacity: 0.7;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">Amazon Web Services</h3>
+                        <p style="font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;">Cloud Infrastructure</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Deploy and scale on AWS cloud infrastructure</p>
+                    </div>
+                </div>
+                
+                <div class="card integration-card">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="FedEx logo" style="height: 3rem; margin: 0 auto 1rem; opacity: 0.7;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">FedEx</h3>
+                        <p style="font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;">Shipping Carriers</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Real-time tracking and shipping with FedEx services</p>
+                    </div>
+                </div>
+                
+                <div class="card integration-card">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="UPS logo" style="height: 3rem; margin: 0 auto 1rem; opacity: 0.7;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">UPS</h3>
+                        <p style="font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;">Shipping Carriers</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Integrated UPS shipping and logistics solutions</p>
+                    </div>
+                </div>
+                
+                <div class="card integration-card">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <img src="/placeholder.svg?height=48&width=120" alt="DHL logo" style="height: 3rem; margin: 0 auto 1rem; opacity: 0.7;">
+                        <h3 style="font-weight: 600; margin-bottom: 0.25rem;">DHL</h3>
+                        <p style="font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem;">International Shipping</p>
+                        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Global shipping and tracking with DHL integration</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="#" class="btn btn-primary">
+                    View All Integrations
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14"/>
+                        <path d="M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transform Section -->
+    <section class="section">
+        <div class="container">
+            <div style="display: grid; gap: 4rem; align-items: center;">
+                <!-- Content -->
+                <div>
+                    <h2 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 1.5rem; line-height: 1.2;">Ready to Transform Your Supply Chain?</h2>
+                    <p style="font-size: 1.125rem; color: var(--muted-foreground); margin-bottom: 2rem; max-width: 36rem;">
+                        Join hundreds of companies that have revolutionized their operations with CatenaLogistix. Our proven methodology ensures a smooth transition and measurable results.
+                    </p>
+
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary); flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                            <span>Reduce operational costs by up to 25%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary); flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                            <span>Improve delivery times by 40%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary); flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                            <span>Increase inventory accuracy to 99%+</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary); flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                            <span>Enhance supplier relationships</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary); flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                            <span>Gain real-time visibility across operations</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary); flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="9"/>
+                            </svg>
+                            <span>Automate manual processes</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <a href="#" class="btn btn-primary">
+                            Start Your Transformation
+                            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="btn btn-ghost">Schedule Consultation</a>
+                    </div>
+                </div>
+
+                <!-- Process Steps -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="card transform-step">
+                        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                            <div style="flex-shrink: 0;">
+                                <div style="width: 3rem; height: 3rem; background-color: var(--primary); color: var(--primary-foreground); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.125rem;">01</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Assessment</h3>
+                                    <span style="font-size: 0.875rem; color: var(--accent); font-weight: 500;">1-2 weeks</span>
+                                </div>
+                                <p style="color: var(--muted-foreground);">We analyze your current supply chain processes and identify optimization opportunities.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card transform-step">
+                        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                            <div style="flex-shrink: 0;">
+                                <div style="width: 3rem; height: 3rem; background-color: var(--primary); color: var(--primary-foreground); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.125rem;">02</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Implementation</h3>
+                                    <span style="font-size: 0.875rem; color: var(--accent); font-weight: 500;">2-4 weeks</span>
+                                </div>
+                                <p style="color: var(--muted-foreground);">Our team works with you to implement CatenaLogistix and integrate with your existing systems.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card transform-step">
+                        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                            <div style="flex-shrink: 0;">
+                                <div style="width: 3rem; height: 3rem; background-color: var(--primary); color: var(--primary-foreground); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.125rem;">03</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Optimization</h3>
+                                    <span style="font-size: 0.875rem; color: var(--accent); font-weight: 500;">Ongoing</span>
+                                </div>
+                                <p style="color: var(--muted-foreground);">Fine-tune your processes with our AI-powered recommendations and best practices.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card transform-step">
+                        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                            <div style="flex-shrink: 0;">
+                                <div style="width: 3rem; height: 3rem; background-color: var(--primary); color: var(--primary-foreground); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.125rem;">04</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Scale</h3>
+                                    <span style="font-size: 0.875rem; color: var(--accent); font-weight: 500;">3-6 months</span>
+                                </div>
+                                <p style="color: var(--muted-foreground);">Expand your optimized supply chain operations across all locations and partners.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section" style="background-color: var(--primary); color: var(--primary-foreground);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; color: var(--primary-foreground);">Trusted by Industry Leaders</h2>
+                <p style="font-size: 1.125rem; color: rgba(240, 249, 255, 0.8); max-width: 32rem; margin: 0 auto;">
+                    Join hundreds of companies that have transformed their supply chain operations with our platform.
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--primary-foreground);">500+</div>
+                    <div style="color: rgba(240, 249, 255, 0.8);">Companies Served</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--primary-foreground);">1M+</div>
+                    <div style="color: rgba(240, 249, 255, 0.8);">Shipments Tracked</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--primary-foreground);">99.9%</div>
+                    <div style="color: rgba(240, 249, 255, 0.8);">System Uptime</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--primary-foreground);">25%</div>
+                    <div style="color: rgba(240, 249, 255, 0.8);">Average Cost Reduction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" style="background-color: rgba(241, 245, 249, 0.3);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p style="font-size: 1.125rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto;">
+                    Don't just take our word for it. Here's what industry professionals say about our platform.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-3">
+                <div class="card testimonial-card">
+                    <div style="display: flex; margin-bottom: 1rem;">
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                    </div>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1.5rem;">"CatenaLogistix transformed our supply chain visibility. We reduced costs by 30% and improved delivery times significantly."</p>
+                    <div>
+                        <div style="font-weight: 600; color: var(--foreground);">Sarah Johnson</div>
+                        <div style="font-size: 0.875rem; color: var(--muted-foreground);">Supply Chain Director at TechCorp Industries</div>
+                    </div>
+                </div>
+                
+                <div class="card testimonial-card">
+                    <div style="display: flex; margin-bottom: 1rem;">
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                    </div>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1.5rem;">"The real-time tracking and analytics have been game-changers for our operations. Highly recommend this platform."</p>
+                    <div>
+                        <div style="font-weight: 600; color: var(--foreground);">Michael Chen</div>
+                        <div style="font-size: 0.875rem; color: var(--muted-foreground);">Operations Manager at Global Manufacturing</div>
+                    </div>
+                </div>
+                
+                <div class="card testimonial-card">
+                    <div style="display: flex; margin-bottom: 1rem;">
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                        <svg style="width: 1rem; height: 1rem; fill: #fbbf24; color: #fbbf24;" viewBox="0 0 24 24">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2"/>
+                        </svg>
+                    </div>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1.5rem;">"User-friendly interface and powerful features. Our team was up and running in just a few days."</p>
+                    <div>
+                        <div style="font-weight: 600; color: var(--foreground);">Emily Rodriguez</div>
+                        <div style="font-size: 0.875rem; color: var(--muted-foreground);">Logistics Coordinator at FastShip Solutions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="container">
+            <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); border-radius: 1rem; padding: 3rem; text-align: center; color: var(--primary-foreground);">
+                <div style="max-width: 48rem; margin: 0 auto;">
+                    <h2 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; line-height: 1.2; color: var(--primary-foreground);">Ready to Transform Your Supply Chain?</h2>
+                    <p style="font-size: 1.125rem; margin-bottom: 2rem; color: rgba(240, 249, 255, 0.9);">
+                        Join hundreds of companies that have streamlined their operations with CatenaLogistix. Start your free trial today and see the difference.
+                    </p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; justify-content: center; align-items: center;">
+                        <a href="#" style="background-color: var(--background); color: var(--foreground); padding: 0.75rem 2rem; border-radius: 0.375rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: transform 0.3s ease;">
+                            Start Free Trial
+                            <svg style="width: 1rem; height: 1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                        <a href="#" style="background-color: transparent; border: 1px solid rgba(240, 249, 255, 0.2); color: var(--primary-foreground); padding: 0.75rem 2rem; border-radius: 0.375rem; text-decoration: none; font-weight: 500; transition: background-color 0.3s ease;">
+                            Schedule Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background-color: rgba(241, 245, 249, 0.5); border-top: 1px solid var(--border);">
+        <div class="container" style="padding: 3rem 1rem;">
+            <div style="display: grid; gap: 2rem;">
+                <!-- Brand -->
+                <div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <div style="background-color: var(--primary); padding: 0.5rem; border-radius: 0.5rem; color: var(--primary-foreground);">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                                <path d="M15 18H9"/>
+                                <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                                <circle cx="17" cy="18" r="2"/>
+                                <circle cx="7" cy="18" r="2"/>
+                            </svg>
+                        </div>
+                        <span style="font-size: 1.25rem; font-weight: bold;">Catena Logistix</span>
+                    </div>
+                    <p style="color: var(--muted-foreground); max-width: 20rem;">
+                        Simplifying supply chain management for businesses worldwide.
+                    </p>
+                </div>
+
+                <!-- Links Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                    <!-- Services -->
+                    <div>
+                        <h3 style="font-weight: 600; margin-bottom: 1rem; color: var(--foreground);">Services</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Transportation</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Inventory Management</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Analytics</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Risk Management</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Company -->
+                    <div>
+                        <h3 style="font-weight: 600; margin-bottom: 1rem; color: var(--foreground);">Company</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">About Us</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Careers</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">News</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Support -->
+                    <div>
+                        <h3 style="font-weight: 600; margin-bottom: 1rem; color: var(--foreground);">Support</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Help Center</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Documentation</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">API Reference</a></li>
+                            <li><a href="#" style="color: var(--muted-foreground); text-decoration: none; transition: color 0.3s ease;">Status</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                <p style="color: var(--muted-foreground); font-size: 0.875rem; text-align: center;">© 2024 Catena Logistix. All rights reserved.</p>
+                <div style="display: flex; gap: 1.5rem;">
+                    <a href="#" style="color: var(--muted-foreground); text-decoration: none; font-size: 0.875rem; transition: color 0.3s ease;">Privacy Policy</a>
+                    <a href="#" style="color: var(--muted-foreground); text-decoration: none; font-size: 0.875rem; transition: color 0.3s ease;">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- HTML CONTENT END -->
+    <!-- ============================================ -->
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT START -->
+    <!-- ============================================ -->
+    <script>
+        
+        // Theme Management
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Toggle theme icons
+            const lightIcons = document.querySelectorAll('.theme-icon-light');
+            const darkIcons = document.querySelectorAll('.theme-icon-dark');
+            
+            if (newTheme === 'dark') {
+                lightIcons.forEach(icon => icon.style.display = 'none');
+                darkIcons.forEach(icon => icon.style.display = 'block');
+            } else {
+                lightIcons.forEach(icon => icon.style.display = 'block');
+                darkIcons.forEach(icon => icon.style.display = 'none');
+            }
+        }
+
+        // Mobile Menu Management
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            const menuIcon = document.querySelector('.menu-icon');
+            const closeIcon = document.querySelector('.close-icon');
+            
+            mobileNav.classList.toggle('active');
+            
+            if (mobileNav.classList.contains('active')) {
+                menuIcon.style.display = 'none';
+                closeIcon.style.display = 'block';
+            } else {
+                menuIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            }
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Set initial theme icons
+            const lightIcons = document.querySelectorAll('.theme-icon-light');
+            const darkIcons = document.querySelectorAll('.theme-icon-dark');
+            
+            if (savedTheme === 'dark') {
+                lightIcons.forEach(icon => icon.style.display = 'none');
+                darkIcons.forEach(icon => icon.style.display = 'block');
+            } else {
+                lightIcons.forEach(icon => icon.style.display = 'block');
+                darkIcons.forEach(icon => icon.style.display = 'none');
+            }
+
+            // Add scroll effect to header
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.header');
+                if (window.scrollY > 100) {
+                    header.style.backgroundColor = savedTheme === 'dark' ? 'rgba(2, 6, 23, 0.98)' : 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.backgroundColor = savedTheme === 'dark' ? 'rgba(2, 6, 23, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+            });
+
+            // Enhanced intersection observer for staggered animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add staggered animation delay for grid items
+                        if (entry.target.classList.contains('service-card') || 
+                            entry.target.classList.contains('customer-card') ||
+                            entry.target.classList.contains('help-card') ||
+                            entry.target.classList.contains('integration-card') ||
+                            entry.target.classList.contains('testimonial-card')) {
+                            
+                            const cards = entry.target.parentElement.children;
+                            const index = Array.from(cards).indexOf(entry.target);
+                            
+                            setTimeout(() => {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0) scale(1)';
+                            }, index * 100);
+                        } else {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0) scale(1)';
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.card, .stat, .dashboard-item, .transform-step').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px) scale(0.95)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Enhanced button hover effects
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                    this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+
+            // Add hover effects for cards
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                    this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05)';
+                });
+            });
+
+            // Add parallax effect to hero decorations
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const decoration1 = document.querySelector('.hero-decoration-1');
+                const decoration2 = document.querySelector('.hero-decoration-2');
+                
+                if (decoration1) {
+                    decoration1.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
+                if (decoration2) {
+                    decoration2.style.transform = `translateY(${scrolled * -0.2}px)`;
+                }
+            });
+
+            // Add typing effect to hero title (optional enhancement)
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                const text = heroTitle.innerHTML;
+                heroTitle.innerHTML = '';
+                let i = 0;
+                
+                function typeWriter() {
+                    if (i < text.length) {
+                        heroTitle.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 50);
+                    }
+                }
+                
+                setTimeout(typeWriter, 500);
+            }
+        });
+
+        // Add loading animation for dashboard items
+        function animateDashboardItems() {
+            const items = document.querySelectorAll('.dashboard-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, index * 150);
+            });
+        }
+
+        // Call animation after page load
+        window.addEventListener('load', animateDashboardItems);
+
+        // Add dynamic counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number, [style*="font-size: 3rem"]');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = counter.textContent.replace(/\d+/, target);
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = counter.textContent.replace(/\d+/, Math.floor(current));
+                    }
+                }, 20);
+            });
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const statsSection = document.querySelector('[style*="background-color: var(--primary)"]');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+        });
+    </script>
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT END -->
+    <!-- ============================================ -->
+</body>
+</html>
